@@ -7,6 +7,7 @@ import (
 	"gorm.io/gorm"
 	"log"
 	"sharing-vision-2021/config"
+	"sharing-vision-2021/domain/post"
 )
 
 type InitiationManager interface {
@@ -78,7 +79,7 @@ func (i *initiator) initDB() {
 	if err != nil {
 		log.Panic("Failed to connect to database : ", err)
 	}
-	if err = db.AutoMigrate(); err != nil {
+	if err = db.AutoMigrate(&post.Post{}); err != nil {
 		log.Panic("Failed to migrate database : ", err)
 	}
 

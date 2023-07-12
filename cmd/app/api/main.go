@@ -6,6 +6,8 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
+	"sharing-vision-2021/delivery/http/post"
+	postDomain "sharing-vision-2021/domain/post"
 	"sharing-vision-2021/initiator"
 	"strings"
 )
@@ -16,6 +18,7 @@ func main() {
 
 	r := i.GetGin()
 	db := i.GetDB()
+	api := r.Group("/api")
 
 	r.GET("/ping", func(c *gin.Context) {
 		sqlDB, err := db.DB()
@@ -33,6 +36,12 @@ func main() {
 			"message": "pong",
 		})
 	})
+
+	postRepo := postDomain.NewPostRepository(db)
+	newPostService := postDomain.NewPostImplementation(postRepo)
+	postController := post.NewPostController(newPostService)
+
+	postController.Route(api)
 
 	r.Run("localhost:7000")
 }
