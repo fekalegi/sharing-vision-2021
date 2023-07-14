@@ -5,6 +5,13 @@ type BaseResponse struct {
 	Message string      `json:"message"`
 	Status  bool        `json:"status"`
 	Errors  interface{} `json:"errors,omitempty"`
+	Meta    interface{} `json:"meta,omitempty"`
+}
+
+type ResponseMeta struct {
+	Limit  int `json:"limit"`
+	Offset int `json:"offset"`
+	Total  int `json:"total"`
 }
 
 func ErrorResponse(err string) BaseResponse {
@@ -34,5 +41,15 @@ func SuccessResponseNoData(msg string) BaseResponse {
 	return BaseResponse{
 		Message: msg,
 		Status:  true,
+	}
+}
+
+func SuccessPaginationResponse(data interface{}, msg string, meta ResponseMeta) BaseResponse {
+	return BaseResponse{
+		Data:    data,
+		Message: msg,
+		Status:  true,
+		Errors:  nil,
+		Meta:    meta,
 	}
 }

@@ -1,6 +1,8 @@
 package post
 
-import "time"
+import (
+	"time"
+)
 
 type Status string
 
