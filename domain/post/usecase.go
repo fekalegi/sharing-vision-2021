@@ -31,7 +31,8 @@ func (u *postImplementation) Get(id int) (*Post, error) {
 }
 
 func (u *postImplementation) Update(id int, req *Post) error {
-	if _, err := u.repo.Get(id); err != nil {
+	_, err := u.repo.Get(id)
+	if err != nil {
 		return err
 	}
 

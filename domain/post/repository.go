@@ -16,6 +16,7 @@ func NewPostRepository(db *gorm.DB) Repository {
 	}
 }
 
+//go:generate mockgen -destination=../../mocks/repository/mock_post_repository.go -package=mock_repository -source=repository.go
 type Repository interface {
 	AddPost(req *Post) error
 	GetList(limit, offset int) ([]Post, int64, error)
