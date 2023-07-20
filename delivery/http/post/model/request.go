@@ -8,6 +8,7 @@ type Post struct {
 }
 
 type List struct {
-	Limit  int `form:"limit" validate:"required,min=1"`
-	Offset int `form:"offset" validate:"min=0"`
+	Limit  int    `form:"limit" validate:"required,min=1"`
+	Offset int    `form:"offset" validate:"min=0"`
+	Status string `form:"status" validate:"oneof='publish' 'draft' 'thrash' ''"`
 }

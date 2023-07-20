@@ -19,7 +19,7 @@ func NewPostRepository(db *gorm.DB) Repository {
 //go:generate mockgen -destination=../../mocks/repository/mock_post_repository.go -package=mock_repository -source=repository.go
 type Repository interface {
 	AddPost(req *Post) error
-	GetList(limit, offset int) ([]Post, int64, error)
+	GetList(limit, offset int, status string) ([]Post, int64, error)
 	Get(id int) (*Post, error)
 	Update(id int, req *Post) error
 	Delete(id int) error
@@ -29,11 +29,17 @@ func (r *repository) AddPost(req *Post) error {
 	return r.db.Create(&req).Error
 }
 
-func (r *repository) GetList(limit, offset int) ([]Post, int64, error) {
+func (r *repository) GetList(limit, offset int, status string) ([]Post, int64, error) {
 	var posts []Post
 	var count int64
 
-	err := r.db.Offset(offset).Limit(limit).Find(&posts).
+	query := r.db.Model(&posts)
+
+	if status != "" {
+		query.Where("status = ?", Status(status))
+	}
+
+	err := query.Offset(offset).Limit(limit).Find(&posts).
 		Offset(-1).Limit(-1).Count(&count).Error
 	if err != nil && errors.Is(err, gorm.ErrRecordNotFound) {
 		return nil, 0, nil

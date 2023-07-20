@@ -48,13 +48,13 @@ func (c *controller) GetList(ctx *gin.Context) {
 		return
 	}
 
-	datas, counts, err := c.postService.GetList(query.Limit, query.Offset)
+	datas, counts, err := c.postService.GetList(query.Limit, query.Offset, query.Status)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, common.ErrorResponse(err.Error()))
 		return
 	}
 
-	ctx.JSON(http.StatusCreated, common.SuccessPaginationResponse(
+	ctx.JSON(http.StatusOK, common.SuccessPaginationResponse(
 		datas,
 		"success",
 		common.ResponseMeta{
@@ -87,7 +87,7 @@ func (c *controller) Get(ctx *gin.Context) {
 		return
 	}
 
-	ctx.JSON(http.StatusCreated, common.SuccessResponseWithData(data, "success"))
+	ctx.JSON(http.StatusOK, common.SuccessResponseWithData(data, "success"))
 	return
 }
 

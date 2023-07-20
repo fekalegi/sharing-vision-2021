@@ -78,9 +78,9 @@ func (mr *MockRepositoryMockRecorder) Get(id interface{}) *gomock.Call {
 }
 
 // GetList mocks base method.
-func (m *MockRepository) GetList(limit, offset int) ([]post.Post, int64, error) {
+func (m *MockRepository) GetList(limit, offset int, status string) ([]post.Post, int64, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetList", limit, offset)
+	ret := m.ctrl.Call(m, "GetList", limit, offset, status)
 	ret0, _ := ret[0].([]post.Post)
 	ret1, _ := ret[1].(int64)
 	ret2, _ := ret[2].(error)
@@ -88,9 +88,9 @@ func (m *MockRepository) GetList(limit, offset int) ([]post.Post, int64, error) 
 }
 
 // GetList indicates an expected call of GetList.
-func (mr *MockRepositoryMockRecorder) GetList(limit, offset interface{}) *gomock.Call {
+func (mr *MockRepositoryMockRecorder) GetList(limit, offset, status interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetList", reflect.TypeOf((*MockRepository)(nil).GetList), limit, offset)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetList", reflect.TypeOf((*MockRepository)(nil).GetList), limit, offset, status)
 }
 
 // Update mocks base method.

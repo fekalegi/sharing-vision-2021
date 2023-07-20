@@ -86,16 +86,16 @@ var _ = Describe("Post Service", func() {
 		mockLimit := 10
 		mockOffset := 0
 		It("return success", func() {
-			repo.EXPECT().GetList(gomock.Any(), gomock.Any()).Return(mockPosts, int64(2), nil)
-			posts, counts, err := postUC.GetList(mockLimit, mockOffset)
+			repo.EXPECT().GetList(gomock.Any(), gomock.Any(), gomock.Any()).Return(mockPosts, int64(2), nil)
+			posts, counts, err := postUC.GetList(mockLimit, mockOffset, "")
 			Expect(err).Should(Succeed())
 			Expect(posts).Should(Equal(mockPosts))
 			Expect(counts).Should(Equal(int64(2)))
 		})
 
 		It("return error", func() {
-			repo.EXPECT().GetList(gomock.Any(), gomock.Any()).Return(nil, int64(0), errSomething)
-			_, _, err := postUC.GetList(mockLimit, mockOffset)
+			repo.EXPECT().GetList(gomock.Any(), gomock.Any(), gomock.Any()).Return(nil, int64(0), errSomething)
+			_, _, err := postUC.GetList(mockLimit, mockOffset, "")
 			Expect(err).Should(HaveOccurred())
 		})
 	})

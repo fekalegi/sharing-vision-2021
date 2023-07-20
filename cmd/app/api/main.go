@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 	"net/http"
@@ -19,6 +20,8 @@ func main() {
 	r := i.GetGin()
 	db := i.GetDB()
 	api := r.Group("/api")
+
+	r.Use(cors.Default())
 
 	r.GET("/ping", func(c *gin.Context) {
 		sqlDB, err := db.DB()
